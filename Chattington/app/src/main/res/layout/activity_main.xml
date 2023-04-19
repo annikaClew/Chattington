@@ -7,46 +7,6 @@
     android:background="#FEF2FF"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar3"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:background="#8556A2"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="178dp"
-        android:layout_height="172dp"
-        android:foregroundTint="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/materialToolbar3"
-        app:layout_constraintVertical_bias="0.238"
-        tools:srcCompat="@drawable/baseline_person_24" />
-
-    <TextView
-        android:id="@+id/introductionTextView"
-        android:layout_width="335dp"
-        android:layout_height="296dp"
-        android:text="Hello! My name is Chattington."
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/materialToolbar3"
-        app:layout_constraintVertical_bias="0.763" />
-
     <FrameLayout
         android:id="@+id/fContainer"
         android:layout_width="0dp"
@@ -61,7 +21,9 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/dark_purple"
+        app:itemIconTint="@color/medium_purple"
+        app:itemTextColor="@color/medium_purple"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

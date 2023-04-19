@@ -8,7 +8,7 @@
     tools:context=".SettingsActivity">
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tv_CurrentPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password"
@@ -31,23 +31,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.165"
-        tools:srcCompat="@drawable/baseline_person_24" />
+        tools:srcCompat="@drawable/ic_person" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_settingsBack"
         android:layout_width="50dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:textAlignment="center"
-        app:icon="@drawable/baseline_arrow_back_24"
+        app:icon="@drawable/ic_backarrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.088"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.023"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/tv_editProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit Profile Picture"
@@ -90,9 +91,9 @@
         app:layout_constraintVertical_bias="0.811" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/et_currentUsername"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="[username]"
@@ -100,12 +101,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.199"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.500"
+        />
 
     <EditText
-        android:id="@+id/editTextTextPersonName6"
+        android:id="@+id/et_EditEmail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="[email]"
@@ -117,9 +120,9 @@
         app:layout_constraintVertical_bias="0.62" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName7"
+        android:id="@+id/et_CurrentPass"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="[password]"
@@ -131,7 +134,7 @@
         app:layout_constraintVertical_bias="0.747" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_Save"
         android:layout_width="207dp"
         android:layout_height="48dp"
         android:text="Save Profile"
@@ -142,7 +145,7 @@
         app:layout_constraintVertical_bias="0.887" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btn_Delete"
         android:layout_width="207dp"
         android:layout_height="48dp"
         android:text="Delete account"
@@ -153,31 +156,47 @@
         app:layout_constraintVertical_bias="0.976" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btn_EditUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="36dp"
         android:text="edit"
-        tools:layout_editor_absoluteX="284dp"
-        tools:layout_editor_absoluteY="339dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_EditEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_currentUsername"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/btn_EditEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="36dp"
         android:text="edit"
-        tools:layout_editor_absoluteX="284dp"
-        tools:layout_editor_absoluteY="423dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_EditPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_EditEmail"
+        app:layout_constraintTop_toBottomOf="@+id/btn_EditUsername" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/btn_EditPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="28dp"
         android:text="edit"
-        tools:layout_editor_absoluteX="284dp"
-        tools:layout_editor_absoluteY="513dp" />
+        app:layout_constraintBottom_toTopOf="@+id/divider3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_CurrentPass"
+        app:layout_constraintTop_toBottomOf="@+id/btn_EditEmail" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/tv_CurrentUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
@@ -191,7 +210,7 @@
         app:layout_constraintVertical_bias="0.444" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/tv_CurrentEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
@@ -202,6 +221,6 @@
         app:layout_constraintHorizontal_bias="0.131"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563" />
+        app:layout_constraintVertical_bias="0.560" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
