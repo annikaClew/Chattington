@@ -12,7 +12,7 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         findViewById<Button>(R.id.btn_settingsBack).setOnClickListener {
-            val intent = Intent(this, UserProfileFragment::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
