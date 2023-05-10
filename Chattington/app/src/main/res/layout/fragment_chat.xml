@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,6 +13,8 @@
         android:id="@+id/recycler_view"
         android:layout_above="@id/bottom_layout"
         />
+
+    <!-- shown initially before any chats are sent -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,12 +25,14 @@
         android:textSize="28dp"
         />
 
+    <!-- layout for the bottom of the chat fragment -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:padding="8dp"
         android:id="@+id/bottom_layout">
+        <!-- the text field, which will show the users msg -->
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,21 +40,31 @@
             android:layout_centerInParent="true"
             android:hint="Write here "
             android:padding="16dp"
-            android:layout_toLeftOf="@id/send_btn"
+            android:layout_toLeftOf="@id/mic_btn"
             android:background="@drawable/rounded_corner"
             />
-        <ImageButton
+        <!-- the mic button, which will be used to record the users voice -->
+        <ImageView
+            android:id="@+id/mic_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:backgroundTint="#F9F8FA"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@id/send_btn"
+            android:src="@drawable/ic_mic_inactive" />
+        <!-- the send button, which will be used to send the users msg -->
+        <ImageButton
             android:id="@+id/send_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
             android:src="@drawable/ic_baseline_send_24"
-            android:background="?attr/selectableItemBackgroundBorderless"
 
-            />
+            tools:ignore="SpeakableTextPresentCheck" />
     </RelativeLayout>
 
 

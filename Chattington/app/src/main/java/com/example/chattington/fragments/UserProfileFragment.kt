@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import com.example.chattington.R
 import com.example.chattington.SettingsActivity
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,6 +41,12 @@ class UserProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_user_profile, container, false)
+
+        // get the passed username from the bundle
+        val username = arguments?.getString("username")
+
+        // set the user profile title to the user's name from the firebase database
+        view.findViewById<TextView>(R.id.tv_UsernameDisplay).setText("Username: " + username)
 
         // Floating Action Button for registering new users
         val settingsButton: View = view.findViewById(R.id.btn_Settings)

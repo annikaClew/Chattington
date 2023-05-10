@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+
+    // for secret local.properties
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -45,6 +48,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // for audio permission
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 
     // for GSON
     implementation 'com.google.code.gson:gson:2.8.9'

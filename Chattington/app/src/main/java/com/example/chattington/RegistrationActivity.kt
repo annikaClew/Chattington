@@ -57,6 +57,8 @@ class RegistrationActivity : AppCompatActivity() {
                                 )
                             }
                             val intent = Intent(this, MainActivity::class.java)
+                            // pass the username to the main activity
+                            intent.putExtra("username", username)
                             startActivity(intent)
                         }
                     }

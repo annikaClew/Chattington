@@ -62,6 +62,11 @@ class LoginActivity : AppCompatActivity() {
                         if (password != null && password.equals(password2)) //if password matches the one user entered
                         {
                             Log.d(TAG, "signInWithEmail:success") //log them in
+
+                            // get the username of this user
+                            val username = document.getString("username")
+                            // pass the username to the MainActivity
+                            intent.putExtra("username", username)
                             startActivity(Intent(this, MainActivity::class.java))
                         } else //wrong password
                         {

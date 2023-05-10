@@ -13,6 +13,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // get the username from the login/register activity
+        val username = intent.getStringExtra("username")
+
         // create the fragments
         val homeFragment = HomeFragment()
         val chatFragment = ChatFragment()
@@ -30,6 +33,13 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.ic_person -> {
+                    // pass the username to the user profile fragment
+                    val bundle = Bundle()
+                    bundle.putString("username", username)
+
+                    println("username: " + username)
+
+                    userprofileFragment.arguments = bundle
                     changeFragment(userprofileFragment)
                     true
                 }
