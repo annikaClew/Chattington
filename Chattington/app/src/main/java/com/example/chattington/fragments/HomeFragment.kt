@@ -103,8 +103,6 @@ class HomeFragment : Fragment() {
                 chatHistoryDao.getAllChatHistory()
             }
 
-            println("chatHistories: $chatHistories")
-
             // Update the conversation list in the UI thread
             withContext(Dispatchers.Main) {
                 conversationList.clear()

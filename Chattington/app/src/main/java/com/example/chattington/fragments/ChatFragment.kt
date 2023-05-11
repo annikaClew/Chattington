@@ -39,18 +39,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Integer.min
 import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ChatFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ChatFragment : Fragment() {
     // for message UI
     private lateinit var recyclerView: RecyclerView
@@ -257,17 +248,9 @@ class ChatFragment : Fragment() {
                         println(result)
                         addResponse(result.trim())
 
-                        // get the title of the chat by getting the first 5 words of the response
+                        // get max 20 characters from the response to use as the chat title
                         if (chatTitle == "New Chat") {
-                            val words = result.split(" ")
-                            chatTitle = ""
-                            // only get up to 20 characters
-                            for (i in 0..4) {
-                                if (words[i].length + chatTitle.length > 20) {
-                                    break
-                                }
-                                chatTitle += words[i] + " "
-                            }
+                            chatTitle = result.substring(0, min(20, result.length))
                             chatTitle = chatTitle.trim()
                             // get rid of line breaks and put everything in one line
                             chatTitle = chatTitle.replace("\n", "")
@@ -285,53 +268,61 @@ class ChatFragment : Fragment() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        // Add the OnBackStackChangedListener to the FragmentManager
+        childFragmentManager.addOnBackStackChangedListener(backStackListener)
+
+        // update the information of the chat
+        if (chatId != -1L) {
+            GlobalScope.launch(Dispatchers.IO) {
+                val chatHistory = chatHistoryDao.getChatHistory(chatId)
+                chatTitle = chatHistory.title
+                messageList = chatHistory.messages.toMutableList()
+                withContext(Dispatchers.Main) {
+                    headerText.text = chatTitle
+                    messageAdapter.notifyDataSetChanged()
+                    recyclerView.smoothScrollToPosition(messageAdapter.itemCount)
+                }
+            }
+        }
+        else {
+            // reset the chat title
+            chatTitle = "New Chat"
+            headerText.text = chatTitle
+            messageList.clear()
+            messageAdapter.notifyDataSetChanged()
+        }
+    }
+
     // ---------- FUNCTIONS FOR ROOM DATABASE STORAGE ---------------
     private val backStackListener = FragmentManager.OnBackStackChangedListener {
-        // handle fragment back stack changes here
     }
     override fun onPause() {
         super.onPause()
 
-        // if there is a response and no chat id yet, save the chat history to the database
-        if (chatTitle != "New Chat" && messageList.size > 1 && chatId == -1L) {
-           // start a new thread
+        // Add the OnBackStackChangedListener to the FragmentManager
+        childFragmentManager.addOnBackStackChangedListener(backStackListener)
+
+        // if there is a response and messageList is not empty, save the chat history to the database
+        if (messageList.isNotEmpty()) {
             GlobalScope.launch(Dispatchers.IO) {
-                // insert this chat history to the room database
-                val messages = messageList.toList()
-                println(messages)
                 val chatHistory = ChatHistory(title = chatTitle, messages = messageList.toList())
-                chatHistoryDao.insertChatHistory(chatHistory)
 
-                // output all saved database items
-                val chatHistories = chatHistoryDao.getAllChatHistory()
-                for (chatHistory in chatHistories) {
-                    println(chatHistory)
+                // insert or update the chat history in the room database
+                if (chatId == -1L) {
+                    chatHistoryDao.insertChatHistory(chatHistory)
+                } else {
+                    chatHistoryDao.updateChatHistory(chatHistory)
                 }
-                // close the database
-            }
-            // if there is a chat id, update the chat history in the database
-        } else if (messageList.size > 1 && chatId != -1L) {
-            // start a new thread
-            GlobalScope.launch(Dispatchers.IO) {
-                // update this chat history to the room database
-                val messages = messageList.toList()
-                println(messages)
-                val chatHistory = ChatHistory(id = chatId, title = chatTitle, messages = messageList.toList())
-                chatHistoryDao.updateChatHistory(chatHistory)
-
-                // output all saved database items
-                val chatHistories = chatHistoryDao.getAllChatHistory()
-                for (chatHistory in chatHistories) {
-                    println(chatHistory)
-                }
-                // close the database
             }
         }
 
-        // reset the chatId
+        // reset the id of the chat
         chatId = -1L
 
-        // remove the OnBackStackChangedListener from the FragmentManager
+        // Remove the OnBackStackChangedListener from the FragmentManager
         childFragmentManager.removeOnBackStackChangedListener(backStackListener)
 
         speechRecognizer.destroy()
