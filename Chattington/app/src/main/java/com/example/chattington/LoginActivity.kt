@@ -67,6 +67,9 @@ class LoginActivity : AppCompatActivity() {
                             // Move the startActivity call inside the success block
                             val intent = Intent(this, MainActivity::class.java)
                             intent.putExtra("username", username)
+                            intent.putExtra("email", email)
+                            intent.putExtra("password", password)
+
                             startActivity(intent)
                             // Finish the LoginActivity to prevent going back to it using the back button
                             finish()

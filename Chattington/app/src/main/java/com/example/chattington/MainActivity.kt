@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
 
         // get the username from the login/register activity
         val username = intent.getStringExtra("username")
+        val email = intent.getStringExtra("email")
+        val password = intent.getStringExtra("password")
 
         // create the fragments
         val homeFragment = HomeFragment()
@@ -36,8 +38,8 @@ class MainActivity : AppCompatActivity() {
                     // pass the username to the user profile fragment
                     val bundle = Bundle()
                     bundle.putString("username", username)
-
-                    println("username: " + username)
+                    bundle.putString("email", email)
+                    bundle.putString("password", password)
 
                     userprofileFragment.arguments = bundle
                     changeFragment(userprofileFragment)

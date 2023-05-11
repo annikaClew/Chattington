@@ -78,8 +78,16 @@ class ChatFragment : Fragment() {
         // get the view
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 
-        //get the passed chat title from the bundle
-        chatTitle = arguments?.getString("chatTitle") ?: "Untitled Chat"
+        // get the passed chat title from the bundle
+        chatTitle = arguments?.getString("chatTitle") ?: "New Chat"
+        // set the title of the chat in the header
+        view.findViewById<TextView>(R.id.header_text).text = chatTitle
+
+        // initialize the room database
+        val context = requireContext().applicationContext
+        db = ChatHistoryDatabase.getInstance(requireContext().applicationContext)
+        chatHistoryDao = db.chatHistoryDao()
+
 
         // get all necessary UI elements for the chat
         recyclerView = view.findViewById(R.id.chat_recycler_view)
@@ -233,7 +241,10 @@ class ChatFragment : Fragment() {
                             for (i in 0..4) {
                                 chatTitle += words[i] + " "
                             }
-                            chatTitle = chatTitle.trim() + "..."
+                            chatTitle = chatTitle.trim()
+                            // get rid of line breaks and put everything in one line
+                            chatTitle = chatTitle.replace("\n", "")
+                            chatTitle += "..."
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -254,12 +265,11 @@ class ChatFragment : Fragment() {
 
         // if there are items in the message list, save this chat history to the room database
         if (messageList.isNotEmpty()) {
-            GlobalScope.launch(Dispatchers.IO) {
-                val context = requireContext().applicationContext
-                db = Room.inMemoryDatabaseBuilder(context, ChatHistoryDatabase::class.java).build()
-                chatHistoryDao = db.chatHistoryDao()
-
+           // start a new thread
+            Thread {
                 // insert this chat history to the room database
+                val messages = messageList.toList()
+                println(messages)
                 val chatHistory = ChatHistory(title = chatTitle, messages = messageList.toList())
                 chatHistoryDao.insertChatHistory(chatHistory)
 
@@ -269,8 +279,7 @@ class ChatFragment : Fragment() {
                     println(chatHistory)
                 }
                 // close the database
-                db.close()
-            }
+            }.start()
         }
 
         // print that we exited the chat

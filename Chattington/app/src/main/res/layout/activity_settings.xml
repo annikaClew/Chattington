@@ -97,6 +97,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="[username]"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.199"
@@ -112,6 +113,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="[email]"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.199"
@@ -126,12 +128,15 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="[password]"
+        android:enabled="false"
+        android:password="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.199"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.747" />
+        app:layout_constraintVertical_bias="0.747"
+        tools:ignore="Deprecated" />
 
     <Button
         android:id="@+id/btn_Save"

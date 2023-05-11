@@ -44,6 +44,4 @@ class ConversationAdapter(private val conversationList: List<Conversation>) :
             }
         }
     }
-
-
 }

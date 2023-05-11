@@ -8,32 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import com.example.chattington.LoginActivity
 import com.example.chattington.R
 import com.example.chattington.SettingsActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [UserProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UserProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,6 +23,8 @@ class UserProfileFragment : Fragment() {
 
         // get the passed username from the bundle
         val username = arguments?.getString("username")
+        val email = arguments?.getString("email")
+        val password = arguments?.getString("password")
 
         // set the user profile title to the user's name from the firebase database
         view.findViewById<TextView>(R.id.tv_UsernameDisplay).setText("Username: " + username)
@@ -50,30 +33,23 @@ class UserProfileFragment : Fragment() {
         val settingsButton: View = view.findViewById(R.id.btn_Settings)
         settingsButton.setOnClickListener { view ->
             val intent = Intent(activity, SettingsActivity::class.java)
+            // sent the username to the settings activity
+            intent.putExtra("username", username)
+            intent.putExtra("email", email)
+            intent.putExtra("password", password)
+            startActivity(intent)
+        }
+
+        // make a listener for the logout button
+        val logoutButton: View = view.findViewById(R.id.btn_LogOut)
+
+        // when the logout button is clicked, go back to the login screen
+        logoutButton.setOnClickListener { view ->
+            val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
         }
 
         // Inflate the layout for this fragment
         return view
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment UserProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            UserProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

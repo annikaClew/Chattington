@@ -44,9 +44,9 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         // initialize the room database
-        val context = requireContext().applicationContext
-        db = Room.inMemoryDatabaseBuilder(context, ChatHistoryDatabase::class.java).build()
+        db = ChatHistoryDatabase.getInstance(requireContext().applicationContext)
         chatHistoryDao = db.chatHistoryDao()
+
 
         // Inflate the layout for this fragment
         return view
@@ -62,18 +62,23 @@ class HomeFragment : Fragment() {
         // get the view
         val view = requireView()
 
-        // get chat histories from database, then convert them to conversations
-        GlobalScope.launch(Dispatchers.IO) {
-            val chatHistories = chatHistoryDao.getAllChatHistory()
-
-            // get the title of each chat history and make a conversation object
-            for (chatHistory in chatHistories) {
-                val title = chatHistory.title
-                val conversation = Conversation(title)
-                conversationList.add(conversation)
+        // start a thread to update the recycler view
+        GlobalScope.launch {
+            // Perform the database operation in the IO dispatcher
+            val chatHistories = withContext(Dispatchers.IO) {
+                chatHistoryDao.getAllChatHistory()
             }
 
+            println("chatHistories: $chatHistories")
+
+            // Update the conversation list in the UI thread
             withContext(Dispatchers.Main) {
+                conversationList.clear()
+                for (chatHistory in chatHistories) {
+                    conversationList.add(Conversation(chatHistory.title))
+                }
+
+                // Notify the adapter and update the UI
                 conversationAdapter.notifyDataSetChanged()
             }
         }
