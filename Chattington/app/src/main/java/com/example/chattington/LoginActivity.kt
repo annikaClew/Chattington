@@ -63,12 +63,15 @@ class LoginActivity : AppCompatActivity() {
                         {
                             Log.d(TAG, "signInWithEmail:success") //log them in
 
-                            // get the username of this user
                             val username = document.getString("username")
-                            // pass the username to the MainActivity
+                            // Move the startActivity call inside the success block
+                            val intent = Intent(this, MainActivity::class.java)
                             intent.putExtra("username", username)
-                            startActivity(Intent(this, MainActivity::class.java))
-                        } else //wrong password
+                            startActivity(intent)
+                            // Finish the LoginActivity to prevent going back to it using the back button
+                            finish()
+                        }
+                        else //wrong password
                         {
                             Toast.makeText(baseContext, "Incorrect password", Toast.LENGTH_LONG)
                                 .show()
@@ -79,7 +82,6 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "get failed with ", exception)
                     Toast.makeText(baseContext, "Account not found", Toast.LENGTH_LONG).show()
                 }
-
         }
     }
 }

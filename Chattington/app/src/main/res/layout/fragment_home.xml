@@ -6,10 +6,12 @@
     tools:context=".fragments.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_ChatList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:id="@+id/conversation_recycler_view"
+        android:layout_above="@id/bottom_layout"
+        />
+
 
     <Button
         android:id="@+id/btn_Clear"

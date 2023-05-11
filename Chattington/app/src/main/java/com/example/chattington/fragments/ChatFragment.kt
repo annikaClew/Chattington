@@ -1,5 +1,6 @@
 package com.example.chattington.fragments
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -33,6 +34,9 @@ import org.json.JSONObject
 import java.io.IOException
 import androidx.test.core.app.ApplicationProvider
 import com.example.chattington.BuildConfig
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,7 +52,7 @@ private const val ARG_PARAM2 = "param2"
 class ChatFragment : Fragment() {
     // for message UI
     private lateinit var recyclerView: RecyclerView
-    private lateinit var welcomeTextView: TextView
+    private lateinit var welcomeTextView: LinearLayout
     private lateinit var messageEditText: EditText
     private lateinit var sendButton: ImageButton
     private var chatTitle = "Untitled Chat"
@@ -74,8 +78,11 @@ class ChatFragment : Fragment() {
         // get the view
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 
+        //get the passed chat title from the bundle
+        chatTitle = arguments?.getString("chatTitle") ?: "Untitled Chat"
+
         // get all necessary UI elements for the chat
-        recyclerView = view.findViewById(R.id.recycler_view)
+        recyclerView = view.findViewById(R.id.chat_recycler_view)
         welcomeTextView = view.findViewById(R.id.welcome_text)
         messageEditText = view.findViewById(R.id.message_edit_text)
         sendButton = view.findViewById(R.id.send_btn)
@@ -102,64 +109,70 @@ class ChatFragment : Fragment() {
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
         speechRecognizer.setRecognitionListener(object : RecognitionListener {
             override fun onReadyForSpeech(bundle: Bundle) {
-                micButton.setImageResource(R.drawable.ic_mic_active)
+                micButton.setImageResource(R.drawable.ic_mic_active) // Assuming you have ic_mic_active drawable
                 messageEditText.setText("")
                 messageEditText.hint = "Listening..."
             }
+
             override fun onBeginningOfSpeech() {
-
             }
+
             override fun onRmsChanged(v: Float) {
-
             }
+
             override fun onBufferReceived(bytes: ByteArray) {
-
             }
+
             override fun onEndOfSpeech() {
-                micButton.setImageResource(R.drawable.ic_mic_inactive)
+                micButton.setImageResource(R.drawable.ic_mic_inactive) // Assuming you have ic_mic_inactive drawable
             }
-            override fun onError(i: Int) {
-                micButton.setImageResource(R.drawable.ic_mic_inactive)
-                messageEditText.setText("")
-                messageEditText.hint = "Error, could not record your speech..."
-            }
-            override fun onResults(bundle: Bundle) {
-                micButton.setImageResource(R.drawable.ic_mic_inactive)
-                val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                messageEditText.setText(data?.get(0))
-            }
-            override fun onPartialResults(bundle: Bundle) {
-                micButton.setImageResource(R.drawable.ic_mic_inactive)
-                val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                messageEditText.setText(data?.get(0))
-            }
-            override fun onEvent(i: Int, bundle: Bundle) {
 
+            override fun onError(i: Int) {
+                micButton.setImageResource(R.drawable.ic_mic_inactive) // Assuming you have ic_mic_inactive drawable
+                messageEditText.setText("")
+                messageEditText.hint = "Please try again..."
+            }
+
+            override fun onResults(bundle: Bundle) {
+                micButton.setImageResource(R.drawable.ic_mic_inactive) // Assuming you have ic_mic_inactive drawable
+                val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                messageEditText.setText(data?.get(0))
+                messageEditText.hint = "Write here"
+            }
+
+            override fun onPartialResults(bundle: Bundle) {
+                micButton.setImageResource(R.drawable.ic_mic_inactive) // Assuming you have ic_mic_inactive drawable
+                val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                messageEditText.setText(data?.get(0))
+            }
+
+            override fun onEvent(i: Int, bundle: Bundle) {
             }
         })
-//        micButton.setOnTouchListener(View.OnTouchListener { view, motionEvent ->
-//            if (motionEvent.action == MotionEvent.ACTION_UP) {
-//                micButton.setImageResource(R.drawable.ic_mic_inactive)
-//                speechRecognizer.stopListening()
-//            }
-//            if (motionEvent.action == MotionEvent.ACTION_DOWN) {
-//                micButton.setImageResource(R.drawable.ic_mic_active)
-//                speechRecognizer.startListening(speechRecognizerIntent)
-//            }
-//            false
-//        })
+
         micButton.setOnClickListener {
             // check if permission is granted
-            if (ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
                 // check if device is running Android 6.0+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    micButton.setImageResource(R.drawable.ic_mic_active)
+                    micButton.setImageResource(R.drawable.ic_mic_active) // Assuming you have ic_mic_active drawable
                     speechRecognizer.startListening(speechRecognizerIntent)
                     messageEditText.setText("")
                     messageEditText.hint = "Listening..."
                 }
             } else {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.RECORD_AUDIO), 1)
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.RECORD_AUDIO), 1)
+
+                // if permission is granted, start listening
+                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                    // check if device is running Android 6.0+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        micButton.setImageResource(R.drawable.ic_mic_active) // Assuming you have ic_mic_active drawable
+                        speechRecognizer.startListening(speechRecognizerIntent)
+                        messageEditText.setText("")
+                        messageEditText.hint = "Listening..."
+                    }
+                }
             }
         }
 
@@ -183,7 +196,6 @@ class ChatFragment : Fragment() {
     private fun callAPI(question: String) {
         // OkHttp
         messageList.add(Message("Typing... ", Message.SENT_BY_BOT))
-
         val jsonBody = JSONObject()
         try {
             jsonBody.put("model", "text-davinci-003")
@@ -199,12 +211,10 @@ class ChatFragment : Fragment() {
             .header("Authorization", BuildConfig.OPEN_API_KEY)
             .post(body)
             .build()
-
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 addResponse("Failed to load response due to " + e.message)
             }
-
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
@@ -216,10 +226,14 @@ class ChatFragment : Fragment() {
                         println(result)
                         addResponse(result.trim())
 
-                        // get the title of the chat by getting the first line of the response
-                        if (chatTitle == "") {
-                            chatTitle = result.split("\n")[0]
-                            println(chatTitle)
+                        // get the title of the chat by getting the first 5 words of the response
+                        if (chatTitle == "Untitled Chat") {
+                            val words = result.split(" ")
+                            chatTitle = ""
+                            for (i in 0..4) {
+                                chatTitle += words[i] + " "
+                            }
+                            chatTitle = chatTitle.trim() + "..."
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -232,21 +246,33 @@ class ChatFragment : Fragment() {
     }
 
     // ---------- FUNCTIONS FOR ROOM DATABASE STORAGE ---------------
-    private val backStackListener = object : FragmentManager.OnBackStackChangedListener {
-        override fun onBackStackChanged() {
-            // handle fragment back stack changes here
-        }
+    private val backStackListener = FragmentManager.OnBackStackChangedListener {
+        // handle fragment back stack changes here
     }
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
 
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, ChatHistoryDatabase::class.java).build()
-        chatHistoryDao = db.chatHistoryDao()
+        // if there are items in the message list, save this chat history to the room database
+        if (messageList.isNotEmpty()) {
+            GlobalScope.launch(Dispatchers.IO) {
+                val context = requireContext().applicationContext
+                db = Room.inMemoryDatabaseBuilder(context, ChatHistoryDatabase::class.java).build()
+                chatHistoryDao = db.chatHistoryDao()
 
-        // save chat history to database
-        val chatHistory = ChatHistory(1, chatTitle, messageList)
-        chatHistoryDao.insertChatHistory(chatHistory)
+                // insert this chat history to the room database
+                val chatHistory = ChatHistory(title = chatTitle, messages = messageList.toList())
+                chatHistoryDao.insertChatHistory(chatHistory)
+
+
+                // output all saved database items
+                val chatHistories = chatHistoryDao.getAllChatHistory()
+                for (chatHistory in chatHistories) {
+                    println(chatHistory)
+                }
+                // close the database
+                db.close()
+            }
+        }
 
         // print that we exited the chat
         println("Exited chat")
@@ -257,22 +283,12 @@ class ChatFragment : Fragment() {
         speechRecognizer.destroy()
     }
 
-    // ---------- FUNCTIONS FOR SPEECH TO TEXT ----------------------
-    private fun checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(android.Manifest.permission.RECORD_AUDIO),
-                RecordAudioRequestCode
-            )
-        }
-    }
+    // ---------- FUNCTIONS FOR PERMISSIONS -------------------------
     override fun onRequestPermissionsResult(
         requestCode: Int,
         @NonNull permissions: Array<String>,
         @NonNull grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == RecordAudioRequestCode && grantResults.isNotEmpty()) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(requireContext(), "Permission Granted", Toast.LENGTH_SHORT).show()

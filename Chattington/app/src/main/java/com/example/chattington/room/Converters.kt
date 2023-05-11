@@ -6,14 +6,12 @@ import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import java.lang.reflect.Type
 
-
 class Converters {
     @TypeConverter
     fun fromMessageList(messages: List<Message?>?): String? {
         val gson = Gson()
         return gson.toJson(messages)
     }
-
     @TypeConverter
     fun toMessageList(messagesString: String?): List<Message?>? {
         val gson = Gson()

@@ -11,5 +11,5 @@ import com.example.chattington.recycler_view.Message
 data class ChatHistory (
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "messages") val messages: MutableList<Message>
+    @ColumnInfo(name = "messages") val messages: List<Message>
 )

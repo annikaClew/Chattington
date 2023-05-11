@@ -1,7 +1,6 @@
 package com.example.chattington.room
 
 import androidx.room.*
-import com.example.chattington.recycler_view.Message
 
 @Dao
 interface ChatHistoryDao {
@@ -14,6 +13,9 @@ interface ChatHistoryDao {
     @Delete
     fun deleteChatHistory(history: ChatHistory)
 
+    @Query("SELECT * FROM chat_history WHERE title = :title")
+    fun getChatHistory(title: String): ChatHistory
+
     @Query("SELECT * FROM chat_history")
-    fun loadAllMessages(): MutableList<ChatHistory>
+    fun getAllChatHistory(): List<ChatHistory>
 }
