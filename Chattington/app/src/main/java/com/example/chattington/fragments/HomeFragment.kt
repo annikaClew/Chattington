@@ -85,23 +85,18 @@ class HomeFragment : Fragment() {
                     conversationAdapter.notifyDataSetChanged()
                 }
             }
+            // make the no conversations layout visible
+            view.findViewById<LinearLayout>(R.id.no_conversations_layout).visibility = View.VISIBLE
+            // make the clear conversations button invisible
+            view.findViewById<Button>(R.id.btn_Clear).visibility = View.GONE
         }
 
         // Inflate the layout for this fragment
         return view
     }
 
-    // when this fragment is opened, update the recycler view
-    override fun onResume() {
-        super.onResume()
-
-        // print to show that the fragment is being opened
-        println("HomeFragment opened")
-
-        // get the view
-        val view = requireView()
-
-        // start a thread to update the recycler view
+    // Declare the function to update the RecyclerView
+    private fun updateRecyclerView() {
         GlobalScope.launch {
             // Perform the database operation in the IO dispatcher
             val chatHistories = withContext(Dispatchers.IO) {
@@ -121,6 +116,17 @@ class HomeFragment : Fragment() {
                 conversationAdapter.notifyDataSetChanged()
             }
         }
+    }
+
+    // when this fragment is opened, update the recycler view
+    override fun onResume() {
+        super.onResume()
+
+        // print to show that the fragment is being opened
+        println("HomeFragment opened")
+
+        // get the view
+        val view = requireView()
 
         // get the recycler view
         recyclerView = view.findViewById(R.id.conversation_recycler_view)
@@ -131,6 +137,8 @@ class HomeFragment : Fragment() {
         llm.stackFromEnd = true
         recyclerView.layoutManager = llm
 
-        conversationAdapter.notifyDataSetChanged()
+        // Update the RecyclerView
+        updateRecyclerView()
     }
+
 }

@@ -34,6 +34,11 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.ic_chat -> {
+                    // if the current fragment is the chat fragment, change the passed chat id to -1L
+                    // this will cause the chat fragment to create a new chat
+                    val bundle = Bundle()
+                    bundle.putLong("conversation_id", -1L)
+                    chatFragment.arguments = bundle
                     changeFragment(chatFragment)
                     true
                 }

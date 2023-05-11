@@ -34,6 +34,7 @@ import org.json.JSONObject
 import java.io.IOException
 import androidx.test.core.app.ApplicationProvider
 import com.example.chattington.BuildConfig
+import com.example.chattington.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -271,6 +272,8 @@ class ChatFragment : Fragment() {
                             // get rid of line breaks and put everything in one line
                             chatTitle = chatTitle.replace("\n", "")
                             chatTitle += "..."
+                            // update the header of the chat
+                            headerText.text = chatTitle
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -286,13 +289,13 @@ class ChatFragment : Fragment() {
     private val backStackListener = FragmentManager.OnBackStackChangedListener {
         // handle fragment back stack changes here
     }
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
 
-        // if there are items in the message list, save this chat history to the room database
+        // if there is a response and no chat id yet, save the chat history to the database
         if (chatTitle != "New Chat" && messageList.size > 1 && chatId == -1L) {
            // start a new thread
-            Thread {
+            GlobalScope.launch(Dispatchers.IO) {
                 // insert this chat history to the room database
                 val messages = messageList.toList()
                 println(messages)
@@ -305,7 +308,24 @@ class ChatFragment : Fragment() {
                     println(chatHistory)
                 }
                 // close the database
-            }.start()
+            }
+            // if there is a chat id, update the chat history in the database
+        } else if (messageList.size > 1 && chatId != -1L) {
+            // start a new thread
+            GlobalScope.launch(Dispatchers.IO) {
+                // update this chat history to the room database
+                val messages = messageList.toList()
+                println(messages)
+                val chatHistory = ChatHistory(id = chatId, title = chatTitle, messages = messageList.toList())
+                chatHistoryDao.updateChatHistory(chatHistory)
+
+                // output all saved database items
+                val chatHistories = chatHistoryDao.getAllChatHistory()
+                for (chatHistory in chatHistories) {
+                    println(chatHistory)
+                }
+                // close the database
+            }
         }
 
         // reset the chatId
