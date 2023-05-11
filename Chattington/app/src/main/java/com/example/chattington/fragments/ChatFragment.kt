@@ -263,7 +263,6 @@ class ChatFragment : Fragment() {
                 val chatHistory = ChatHistory(title = chatTitle, messages = messageList.toList())
                 chatHistoryDao.insertChatHistory(chatHistory)
 
-
                 // output all saved database items
                 val chatHistories = chatHistoryDao.getAllChatHistory()
                 for (chatHistory in chatHistories) {
