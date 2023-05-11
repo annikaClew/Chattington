@@ -7,8 +7,8 @@
     android:layout_margin="5dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="8dp"
-    app:cardElevation="8dp"
-    app:cardMaxElevation="10dp"
+    app:cardElevation="4dp"
+    app:cardMaxElevation="5dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
 
@@ -16,11 +16,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Text View to display Course Name -->
+        <!-- Chat Icon -->
+        <ImageView
+            android:id="@+id/iv_ChatIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_chat" />
+
+        <!-- Text View to display Conversation Title -->
         <TextView
             android:id="@+id/tv_ConversationTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/iv_ChatIcon"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"

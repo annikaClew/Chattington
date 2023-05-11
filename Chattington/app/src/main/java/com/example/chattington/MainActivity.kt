@@ -23,6 +23,9 @@ class MainActivity : AppCompatActivity() {
         val chatFragment = ChatFragment()
         val userprofileFragment = UserProfileFragment()
 
+        // initially set the home fragment
+        changeFragment(homeFragment)
+
         // set up bottom navigation view
         findViewById<BottomNavigationView>(R.id.bottomNavigationView).setOnItemSelectedListener { item ->
             when(item.itemId) {

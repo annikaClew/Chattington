@@ -10,8 +10,8 @@
         android:layout_height="match_parent"
         android:id="@+id/conversation_recycler_view"
         android:layout_above="@id/bottom_layout"
+        android:layout_marginBottom="60dp"
         />
-
 
     <Button
         android:id="@+id/btn_Clear"
@@ -19,8 +19,26 @@
         android:layout_height="wrap_content"
         android:text="Clear Conversations"
         android:fontFamily="@font/montserrat"
-        android:layout_marginTop="650dp"
-        android:layout_marginStart="95dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="16dp"
         />
+
+    <LinearLayout
+        android:id="@+id/no_conversations_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_add_conversation" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:text="You have no conversations! Create a new chat to start a conversation" />
+    </LinearLayout>
 
 </FrameLayout>

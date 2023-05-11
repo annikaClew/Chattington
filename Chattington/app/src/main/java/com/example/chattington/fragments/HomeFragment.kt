@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -46,7 +47,45 @@ class HomeFragment : Fragment() {
         // initialize the room database
         db = ChatHistoryDatabase.getInstance(requireContext().applicationContext)
         chatHistoryDao = db.chatHistoryDao()
+        conversationAdapter = ConversationAdapter(conversationList)
 
+        // only make the clear conversations button visible if there are conversations
+        GlobalScope.launch {
+            // Perform the database operation in the IO dispatcher
+            val chatHistories = withContext(Dispatchers.IO) {
+                chatHistoryDao.getAllChatHistory()
+            }
+
+            // Update the conversation list in the UI thread
+            withContext(Dispatchers.Main) {
+                if (chatHistories.isEmpty()) {
+                    view.findViewById<LinearLayout>(R.id.no_conversations_layout).visibility = View.VISIBLE
+                    view.findViewById<Button>(R.id.btn_Clear).visibility = View.GONE
+                } else {
+                    view.findViewById<LinearLayout>(R.id.no_conversations_layout).visibility = View.GONE
+                    view.findViewById<Button>(R.id.btn_Clear).visibility = View.VISIBLE
+                }
+            }
+        }
+
+        // on click listener for the clear conversations button
+        view.findViewById<Button>(R.id.btn_Clear).setOnClickListener {
+            // start a thread to clear the database
+            GlobalScope.launch {
+                // Perform the database operation in the IO dispatcher
+                withContext(Dispatchers.IO) {
+                    chatHistoryDao.deleteAllChatHistory()
+                }
+
+                // Update the conversation list in the UI thread
+                withContext(Dispatchers.Main) {
+                    conversationList.clear()
+
+                    // Notify the adapter and update the UI
+                    conversationAdapter.notifyDataSetChanged()
+                }
+            }
+        }
 
         // Inflate the layout for this fragment
         return view
@@ -75,7 +114,7 @@ class HomeFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 conversationList.clear()
                 for (chatHistory in chatHistories) {
-                    conversationList.add(Conversation(chatHistory.title))
+                    conversationList.add(Conversation(chatHistory.id, chatHistory.title))
                 }
 
                 // Notify the adapter and update the UI

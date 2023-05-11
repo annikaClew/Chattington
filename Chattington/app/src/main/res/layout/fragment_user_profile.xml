@@ -18,14 +18,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126" />
+        app:layout_constraintVertical_bias="0.182" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_marginStart="141dp"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="142dp"
@@ -33,33 +34,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_UserProfileTitle"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:src="@drawable/profile_pic" />
+
 
     <TextView
         android:id="@+id/tv_UsernameDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
-        android:layout_marginTop="46dp"
         android:layout_marginEnd="177dp"
+        android:layout_marginBottom="40dp"
         android:fontFamily="@font/montserrat"
         android:text="Username Example123"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_LogOut"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_LogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="228dp"
+        android:layout_marginBottom="152dp"
         android:fontFamily="@font/montserrat"
         android:text="Log Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button

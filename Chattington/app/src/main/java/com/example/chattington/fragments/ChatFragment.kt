@@ -37,6 +37,7 @@ import com.example.chattington.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -55,11 +56,13 @@ class ChatFragment : Fragment() {
     private lateinit var welcomeTextView: LinearLayout
     private lateinit var messageEditText: EditText
     private lateinit var sendButton: ImageButton
-    private var chatTitle = "Untitled Chat"
+    private var chatTitle = "New Chat"
     private var messageList = mutableListOf<Message>()
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var micButton: ImageView
+    private lateinit var headerText: TextView
+    private var chatId: Long = -1L
 
     // for API call
     private val JSON = "application/json; charset=utf-8".toMediaType()
@@ -78,16 +81,14 @@ class ChatFragment : Fragment() {
         // get the view
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 
-        // get the passed chat title from the bundle
-        chatTitle = arguments?.getString("chatTitle") ?: "New Chat"
-        // set the title of the chat in the header
-        view.findViewById<TextView>(R.id.header_text).text = chatTitle
-
         // initialize the room database
         val context = requireContext().applicationContext
         db = ChatHistoryDatabase.getInstance(requireContext().applicationContext)
         chatHistoryDao = db.chatHistoryDao()
 
+        headerText = view.findViewById(R.id.header_text)
+        // get the passed chat id from the bundle
+        chatId = arguments?.getLong("conversation_id") ?: -1L
 
         // get all necessary UI elements for the chat
         recyclerView = view.findViewById(R.id.chat_recycler_view)
@@ -109,6 +110,39 @@ class ChatFragment : Fragment() {
             welcomeTextView.visibility = View.GONE
         }
 
+        // get the chat title and message list from the database using the chat id only if it is not 0
+        if (chatId != -1L) {
+            GlobalScope.launch(Dispatchers.IO) {
+                welcomeTextView.visibility = View.GONE
+
+                // get the chat history containing this id
+                val chatHistory = chatHistoryDao.getChatHistory(chatId)
+                // get the chat title
+                chatTitle = chatHistory.title
+
+                val updatedMessageList = mutableListOf<Message>()
+
+                // add each message to the chat
+                for (message in chatHistory.messages) {
+                    updatedMessageList.add(message)
+                }
+
+                withContext(Dispatchers.Main) {
+                    // set the title of the chat on the header
+                    headerText.text = chatTitle
+                    // update the messageList with the new messages
+                    messageList.clear()
+                    messageList.addAll(updatedMessageList)
+                    // notify the adapter that the data has changed
+                    messageAdapter.notifyDataSetChanged()
+                }
+            }
+        }
+        else {
+            // set the title of the "new chat" on the header
+            headerText.text = chatTitle
+        }
+
         // get all necessary UI elements for speech to text
         micButton = view.findViewById(R.id.mic_btn)
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
@@ -117,45 +151,33 @@ class ChatFragment : Fragment() {
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
         speechRecognizer.setRecognitionListener(object : RecognitionListener {
             override fun onReadyForSpeech(bundle: Bundle) {
-                micButton.setImageResource(R.drawable.ic_mic_active) // Assuming you have ic_mic_active drawable
+                micButton.setImageResource(R.drawable.ic_mic_active)
                 messageEditText.setText("")
                 messageEditText.hint = "Listening..."
             }
-
-            override fun onBeginningOfSpeech() {
-            }
-
-            override fun onRmsChanged(v: Float) {
-            }
-
-            override fun onBufferReceived(bytes: ByteArray) {
-            }
-
+            override fun onBeginningOfSpeech() {}
+            override fun onRmsChanged(v: Float) {}
+            override fun onBufferReceived(bytes: ByteArray) {}
             override fun onEndOfSpeech() {
-                micButton.setImageResource(R.drawable.ic_mic_inactive) // Assuming you have ic_mic_inactive drawable
+                micButton.setImageResource(R.drawable.ic_mic_inactive)
             }
-
             override fun onError(i: Int) {
-                micButton.setImageResource(R.drawable.ic_mic_inactive) // Assuming you have ic_mic_inactive drawable
+                micButton.setImageResource(R.drawable.ic_mic_inactive)
                 messageEditText.setText("")
                 messageEditText.hint = "Please try again..."
             }
-
             override fun onResults(bundle: Bundle) {
-                micButton.setImageResource(R.drawable.ic_mic_inactive) // Assuming you have ic_mic_inactive drawable
+                micButton.setImageResource(R.drawable.ic_mic_inactive)
                 val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 messageEditText.setText(data?.get(0))
                 messageEditText.hint = "Write here"
             }
-
             override fun onPartialResults(bundle: Bundle) {
                 micButton.setImageResource(R.drawable.ic_mic_inactive) // Assuming you have ic_mic_inactive drawable
                 val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 messageEditText.setText(data?.get(0))
             }
-
-            override fun onEvent(i: Int, bundle: Bundle) {
-            }
+            override fun onEvent(i: Int, bundle: Bundle) {}
         })
 
         micButton.setOnClickListener {
@@ -235,10 +257,14 @@ class ChatFragment : Fragment() {
                         addResponse(result.trim())
 
                         // get the title of the chat by getting the first 5 words of the response
-                        if (chatTitle == "Untitled Chat") {
+                        if (chatTitle == "New Chat") {
                             val words = result.split(" ")
                             chatTitle = ""
+                            // only get up to 20 characters
                             for (i in 0..4) {
+                                if (words[i].length + chatTitle.length > 20) {
+                                    break
+                                }
                                 chatTitle += words[i] + " "
                             }
                             chatTitle = chatTitle.trim()
@@ -264,7 +290,7 @@ class ChatFragment : Fragment() {
         super.onStop()
 
         // if there are items in the message list, save this chat history to the room database
-        if (messageList.isNotEmpty()) {
+        if (chatTitle != "New Chat" && messageList.size > 1 && chatId == -1L) {
            // start a new thread
             Thread {
                 // insert this chat history to the room database
@@ -282,8 +308,8 @@ class ChatFragment : Fragment() {
             }.start()
         }
 
-        // print that we exited the chat
-        println("Exited chat")
+        // reset the chatId
+        chatId = -1L
 
         // remove the OnBackStackChangedListener from the FragmentManager
         childFragmentManager.removeOnBackStackChangedListener(backStackListener)
