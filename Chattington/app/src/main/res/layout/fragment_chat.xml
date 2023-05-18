@@ -99,7 +99,6 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
             android:src="@drawable/ic_baseline_send_24"
-
             tools:ignore="SpeakableTextPresentCheck" />
     </RelativeLayout>
 </RelativeLayout>

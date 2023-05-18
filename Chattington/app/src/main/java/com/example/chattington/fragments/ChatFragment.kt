@@ -93,14 +93,6 @@ class ChatFragment : Fragment() {
         val llm = LinearLayoutManager(context)
         llm.stackFromEnd = true
         recyclerView.layoutManager = llm
-        // on click listener for chat send button
-        sendButton.setOnClickListener {
-            val question = messageEditText.text.toString().trim()
-            addToChat(question, Message.SENT_BY_ME)
-            messageEditText.setText("")
-            callAPI(question)
-            welcomeTextView.visibility = View.GONE
-        }
 
         // get the chat title and message list from the database using the chat id only if it is not 0
         if (chatId != -1L) {
@@ -134,6 +126,16 @@ class ChatFragment : Fragment() {
             // set the title of the "new chat" on the header
             headerText.text = chatTitle
         }
+
+        // on click listener for chat send button
+        sendButton.setOnClickListener {
+            val question = messageEditText.text.toString().trim()
+            addToChat(question, Message.SENT_BY_ME)
+            messageEditText.setText("")
+            callAPI(question)
+            welcomeTextView.visibility = View.GONE
+        }
+
 
         // get all necessary UI elements for speech to text
         micButton = view.findViewById(R.id.mic_btn)
@@ -274,6 +276,9 @@ class ChatFragment : Fragment() {
         // Add the OnBackStackChangedListener to the FragmentManager
         childFragmentManager.addOnBackStackChangedListener(backStackListener)
 
+        // get the chat id from the arguments
+        val chatId = arguments?.getLong("conversation_id") ?: -1L
+
         // update the information of the chat
         if (chatId != -1L) {
             GlobalScope.launch(Dispatchers.IO) {
@@ -308,12 +313,12 @@ class ChatFragment : Fragment() {
         // if there is a response and messageList is not empty, save the chat history to the database
         if (messageList.isNotEmpty()) {
             GlobalScope.launch(Dispatchers.IO) {
-                val chatHistory = ChatHistory(title = chatTitle, messages = messageList.toList())
-
                 // insert or update the chat history in the room database
                 if (chatId == -1L) {
+                    val chatHistory = ChatHistory(title = chatTitle, messages = messageList.toList())
                     chatHistoryDao.insertChatHistory(chatHistory)
                 } else {
+                    val chatHistory = ChatHistory(id = chatId, title = chatTitle, messages = messageList.toList())
                     chatHistoryDao.updateChatHistory(chatHistory)
                 }
             }
@@ -324,7 +329,6 @@ class ChatFragment : Fragment() {
 
         // Remove the OnBackStackChangedListener from the FragmentManager
         childFragmentManager.removeOnBackStackChangedListener(backStackListener)
-
         speechRecognizer.destroy()
     }
 
