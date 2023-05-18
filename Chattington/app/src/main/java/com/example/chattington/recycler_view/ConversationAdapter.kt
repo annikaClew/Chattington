@@ -51,7 +51,7 @@ class ConversationAdapter(private val conversationList: List<Conversation>) :
         }
 
         fun bind(conversation: Conversation) {
-            conversationTitle.text = "Chat #${conversation.id}: ${conversation.title}"
+            conversationTitle.text = "Chat #${conversationList.indexOf(conversation) + 1}: ${conversation.title}"
         }
     }
 

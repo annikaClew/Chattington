@@ -131,7 +131,7 @@ class HomeFragment : Fragment() {
         conversationAdapter = ConversationAdapter(conversationList)
         recyclerView.adapter = conversationAdapter
         val llm = LinearLayoutManager(context)
-        llm.stackFromEnd = true
+        llm.stackFromEnd = false
         recyclerView.layoutManager = llm
 
         // Update the RecyclerView
