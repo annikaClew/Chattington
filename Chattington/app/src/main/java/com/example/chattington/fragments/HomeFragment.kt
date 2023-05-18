@@ -80,7 +80,6 @@ class HomeFragment : Fragment() {
                 // Update the conversation list in the UI thread
                 withContext(Dispatchers.Main) {
                     conversationList.clear()
-
                     // Notify the adapter and update the UI
                     conversationAdapter.notifyDataSetChanged()
                 }
