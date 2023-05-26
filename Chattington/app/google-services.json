@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "799615422053",
-    "project_id": "chattington-f4b88",
-    "storage_bucket": "chattington-f4b88.appspot.com"
+    "project_number": "718945162344",
+    "project_id": "chattington-7a60c",
+    "storage_bucket": "chattington-7a60c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:799615422053:android:8a950cebfd70cce93dc08c",
+        "mobilesdk_app_id": "1:718945162344:android:5bd483505447d2af8ad7dd",
         "android_client_info": {
           "package_name": "com.example.chattington"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "799615422053-m30n84i8o9kitskkujaphq26b92ekghs.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB7qJuKwwA9DmyXUlXfN-atDCgyE_d8nDI"
+          "current_key": "AIzaSyDc-XBhh3Dgd4HMSowZK0VwBPDDlakhUMc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "799615422053-m30n84i8o9kitskkujaphq26b92ekghs.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

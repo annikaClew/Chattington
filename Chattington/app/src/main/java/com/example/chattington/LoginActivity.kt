@@ -12,7 +12,6 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
 
 class LoginActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth

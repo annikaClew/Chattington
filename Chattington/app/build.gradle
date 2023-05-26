@@ -45,6 +45,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.test:core-ktx:1.5.0'
+    implementation 'com.google.firebase:firebase-firestore:24.1.1'
+    implementation 'com.google.firebase:firebase-auth-ktx:22.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -67,6 +69,9 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     // Firebase Firestore libraries
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.5.0'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.3.0'
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:32.0.0')
+    // Declare the dependency for the Cloud Firestore library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 }

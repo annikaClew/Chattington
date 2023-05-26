@@ -239,6 +239,7 @@ class ChatFragment : Fragment() {
             override fun onFailure(call: Call, e: IOException) {
                 addResponse("Failed to load response due to " + e.message)
             }
+
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
