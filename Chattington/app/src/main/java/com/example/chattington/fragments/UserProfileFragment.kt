@@ -6,13 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
-import com.example.chattington.LoginActivity
+import com.example.chattington.activities.LoginActivity
 import com.example.chattington.R
-import com.example.chattington.SettingsActivity
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.example.chattington.activities.SettingsActivity
 
 class UserProfileFragment : Fragment() {
     override fun onCreateView(

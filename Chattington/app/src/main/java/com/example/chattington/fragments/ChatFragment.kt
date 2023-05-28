@@ -1,7 +1,6 @@
 package com.example.chattington.fragments
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -11,7 +10,6 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -21,20 +19,17 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.chattington.recycler_view.Message
 import com.example.chattington.recycler_view.MessageAdapter
-import com.example.chattington.room.ChatHistory
-import com.example.chattington.room.ChatHistoryDao
-import com.example.chattington.room.ChatHistoryDatabase
+import com.example.chattington.room_database.ChatHistory
+import com.example.chattington.room_database.ChatHistoryDao
+import com.example.chattington.room_database.ChatHistoryDatabase
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
-import androidx.test.core.app.ApplicationProvider
 import com.example.chattington.BuildConfig
-import com.example.chattington.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -277,8 +272,8 @@ class ChatFragment : Fragment() {
         // Add the OnBackStackChangedListener to the FragmentManager
         childFragmentManager.addOnBackStackChangedListener(backStackListener)
 
-        // get the chat id from the arguments
-        val chatId = arguments?.getLong("conversation_id") ?: -1L
+        // get the chatId from the arguments
+        chatId = arguments?.getLong("conversation_id") ?: -1L
 
         // update the information of the chat
         if (chatId != -1L) {
@@ -307,9 +302,6 @@ class ChatFragment : Fragment() {
     }
     override fun onPause() {
         super.onPause()
-
-        // Add the OnBackStackChangedListener to the FragmentManager
-        childFragmentManager.addOnBackStackChangedListener(backStackListener)
 
         // if there is a response and messageList is not empty, save the chat history to the database
         if (messageList.isNotEmpty()) {

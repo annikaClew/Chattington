@@ -1,10 +1,10 @@
-package com.example.chattington
+package com.example.chattington.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.chattington.fragments.UserProfileFragment
+import com.example.chattington.R
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

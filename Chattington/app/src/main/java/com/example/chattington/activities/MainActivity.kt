@@ -1,8 +1,9 @@
-package com.example.chattington
+package com.example.chattington.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.chattington.R
 import com.example.chattington.fragments.ChatFragment
 import com.example.chattington.fragments.HomeFragment
 import com.example.chattington.fragments.UserProfileFragment

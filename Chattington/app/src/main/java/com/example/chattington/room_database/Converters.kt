@@ -1,4 +1,4 @@
-package com.example.chattington.room
+package com.example.chattington.room_database
 
 import androidx.room.TypeConverter
 import com.example.chattington.recycler_view.Message

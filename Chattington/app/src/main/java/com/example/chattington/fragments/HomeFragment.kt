@@ -1,26 +1,19 @@
 package com.example.chattington.fragments
 
 import android.os.Bundle
-import android.speech.SpeechRecognizer
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.chattington.R
 import com.example.chattington.recycler_view.Conversation
 import com.example.chattington.recycler_view.ConversationAdapter
-import com.example.chattington.recycler_view.Message
-import com.example.chattington.recycler_view.MessageAdapter
-import com.example.chattington.room.ChatHistoryDao
-import com.example.chattington.room.ChatHistoryDatabase
+import com.example.chattington.room_database.ChatHistoryDao
+import com.example.chattington.room_database.ChatHistoryDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -137,5 +130,4 @@ class HomeFragment : Fragment() {
         // Update the RecyclerView
         updateRecyclerView()
     }
-
 }

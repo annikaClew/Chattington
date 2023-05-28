@@ -1,13 +1,12 @@
 package com.example.chattington.recycler_view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chattington.MainActivity
+import com.example.chattington.activities.MainActivity
 import com.example.chattington.R
 import com.example.chattington.fragments.ChatFragment
 

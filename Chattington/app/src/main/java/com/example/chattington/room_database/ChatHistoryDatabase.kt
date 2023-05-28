@@ -1,4 +1,4 @@
-package com.example.chattington.room
+package com.example.chattington.room_database
 
 import android.content.Context
 import androidx.room.Database
