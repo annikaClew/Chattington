@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- app theme colors -->
     <color name="light_purple">#FEF2FF</color>
     <color name="medium_purple">#E5CBF2</color>
     <color name="dark_purple">#8556A2</color>
