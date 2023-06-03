@@ -38,20 +38,22 @@ import java.lang.Integer.min
 import java.util.*
 
 class ChatFragment : Fragment() {
-    // for message UI
+    // chat UI components
     private lateinit var recyclerView: RecyclerView
     private lateinit var welcomeTextView: LinearLayout
     private lateinit var messageEditText: EditText
     private lateinit var sendButton: ImageButton
-    private var chatTitle = "New Chat"
-    private var messageList = mutableListOf<Message>()
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var micButton: ImageView
     private lateinit var headerText: TextView
-    private var chatId: Long = -1L
 
-    // for API call
+    // chat information
+    private var chatId: Long = -1L
+    private var chatTitle = "New Chat"
+    private var messageList = mutableListOf<Message>()
+
+    // for OpenAI API calls
     private val JSON = "application/json; charset=utf-8".toMediaType()
     private val client = OkHttpClient()
 
@@ -102,9 +104,7 @@ class ChatFragment : Fragment() {
                 val updatedMessageList = mutableListOf<Message>()
 
                 // add each message to the chat
-                for (message in chatHistory.messages) {
-                    updatedMessageList.add(message)
-                }
+                updatedMessageList.addAll(chatHistory.messages)
 
                 withContext(Dispatchers.Main) {
                     // set the title of the chat on the header
@@ -280,7 +280,7 @@ class ChatFragment : Fragment() {
             GlobalScope.launch(Dispatchers.IO) {
                 val chatHistory = chatHistoryDao.getChatHistory(chatId)
                 chatTitle = chatHistory.title
-                messageList = chatHistory.messages.toMutableList()
+                messageList.addAll(chatHistory.messages)
                 withContext(Dispatchers.Main) {
                     headerText.text = chatTitle
                     messageAdapter.notifyDataSetChanged()
@@ -323,6 +323,9 @@ class ChatFragment : Fragment() {
         // Remove the OnBackStackChangedListener from the FragmentManager
         childFragmentManager.removeOnBackStackChangedListener(backStackListener)
         speechRecognizer.destroy()
+
+        // clear the message list
+        messageList.clear()
     }
 
     // ---------- FUNCTIONS FOR PERMISSIONS -------------------------
