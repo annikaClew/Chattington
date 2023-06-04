@@ -35,7 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_UserProfileTitle"
         app:layout_constraintVertical_bias="0.0"
-        tools:src="@drawable/profile_pic" />
+        tools:src="@drawable/img_profile" />
 
 
     <TextView
