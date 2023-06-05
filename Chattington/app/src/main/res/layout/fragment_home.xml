@@ -1,46 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
 
+    <!-- chat header with chat title -->
+    <LinearLayout
+        android:id="@+id/ll_HeaderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_HomeHeaderText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="16dp"
+            android:text="My Chats"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/conversation_recycler_view"
-        android:layout_above="@id/bottom_layout"
-        android:layout_marginBottom="60dp"
+        android:id="@+id/rv_Chats"
+        android:layout_below="@+id/ll_HeaderLayout"
         app:stackFromEnd="false"
         />
 
     <Button
-        android:id="@+id/btn_Clear"
+        android:id="@+id/btn_ClearChats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clear Conversations"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/montserrat"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_margin="16dp"
-        />
+        android:text="Clear Chats" />
 
     <LinearLayout
-        android:id="@+id/no_conversations_layout"
+        android:id="@+id/ll_NoChats"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
+        android:visibility="gone">
+
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:src="@drawable/ic_add_conversation" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="28sp"
+            android:layout_marginHorizontal="40dp"
             android:gravity="center"
-            android:text="You have no conversations! Create a new chat to start a conversation" />
+            android:text="No chats yet! Create a new chat to start a conversation"
+            android:textSize="28sp" />
     </LinearLayout>
 
-</FrameLayout>
+</RelativeLayout>

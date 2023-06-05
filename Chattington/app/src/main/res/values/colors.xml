@@ -12,4 +12,6 @@
     <color name="light_purple">#FEF2FF</color>
     <color name="medium_purple">#E5CBF2</color>
     <color name="dark_purple">#8556A2</color>
+    <!-- font color -->
+    <color name="dark_gray">#FF808080</color>
 </resources>

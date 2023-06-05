@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_purple"
+    android:gravity="center_horizontal"
+    tools:context=".fragments.ProfileFragment">
+
+    <!-- chat header with chat title and settings button -->
+    <RelativeLayout
+        android:id="@+id/rl_ProfileHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/tv_ChatDescription"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="16dp"
+            android:text="My Profile"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/btn_Settings"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            android:minHeight="48dp"
+            android:src="@drawable/ic_settings"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </RelativeLayout>
+
+    <!-- profile picture -->
+    <ImageView
+        android:id="@+id/iv_ProfilePicture"
+        android:layout_below="@id/rl_ProfileHeader"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+    <!-- profile username -->
+    <TextView
+        android:id="@+id/tv_UsernameDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_ProfilePicture"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Username: Example123"
+        android:textSize="20sp" />
+    <!-- logout button -->
+    <Button
+        android:id="@+id/btn_LogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_UsernameDisplay"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="152dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Log Out" />
+
+</RelativeLayout>

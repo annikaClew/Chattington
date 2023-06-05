@@ -10,8 +10,8 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chattington.R
-import com.example.chattington.recycler_view.Conversation
-import com.example.chattington.recycler_view.ConversationAdapter
+import com.example.chattington.recycler_view.Chat
+import com.example.chattington.recycler_view.ChatAdapter
 import com.example.chattington.room_database.ChatHistoryDao
 import com.example.chattington.room_database.ChatHistoryDatabase
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +22,8 @@ import kotlinx.coroutines.withContext
 class HomeFragment : Fragment() {
     // for message UI
     private lateinit var recyclerView: RecyclerView
-    private lateinit var conversationAdapter: ConversationAdapter
-    private var conversationList = mutableListOf<Conversation>()
+    private lateinit var chatAdapter: ChatAdapter
+    private var chatList = mutableListOf<Chat>()
 
     // for Room database storage
     private lateinit var db: ChatHistoryDatabase
@@ -40,29 +40,29 @@ class HomeFragment : Fragment() {
         // initialize the room database
         db = ChatHistoryDatabase.getInstance(requireContext().applicationContext)
         chatHistoryDao = db.chatHistoryDao()
-        conversationAdapter = ConversationAdapter(conversationList)
+        chatAdapter = ChatAdapter(chatList)
 
-        // only make the clear conversations button visible if there are conversations
+        // only make the clear chat button visible if there are chats
         GlobalScope.launch {
             // Perform the database operation in the IO dispatcher
             val chatHistories = withContext(Dispatchers.IO) {
                 chatHistoryDao.getAllChatHistory()
             }
 
-            // Update the conversation list in the UI thread
+            // Update the chat list in the UI thread
             withContext(Dispatchers.Main) {
                 if (chatHistories.isEmpty()) {
-                    view.findViewById<LinearLayout>(R.id.no_conversations_layout).visibility = View.VISIBLE
-                    view.findViewById<Button>(R.id.btn_Clear).visibility = View.GONE
+                    view.findViewById<LinearLayout>(R.id.ll_NoChats).visibility = View.VISIBLE
+                    view.findViewById<Button>(R.id.btn_ClearChats).visibility = View.GONE
                 } else {
-                    view.findViewById<LinearLayout>(R.id.no_conversations_layout).visibility = View.GONE
-                    view.findViewById<Button>(R.id.btn_Clear).visibility = View.VISIBLE
+                    view.findViewById<LinearLayout>(R.id.ll_NoChats).visibility = View.GONE
+                    view.findViewById<Button>(R.id.btn_ClearChats).visibility = View.VISIBLE
                 }
             }
         }
 
-        // on click listener for the clear conversations button
-        view.findViewById<Button>(R.id.btn_Clear).setOnClickListener {
+        // on click listener for the clear chats button
+        view.findViewById<Button>(R.id.btn_ClearChats).setOnClickListener {
             // start a thread to clear the database
             GlobalScope.launch {
                 // Perform the database operation in the IO dispatcher
@@ -70,17 +70,17 @@ class HomeFragment : Fragment() {
                     chatHistoryDao.deleteAllChatHistory()
                 }
 
-                // Update the conversation list in the UI thread
+                // Update the chat list in the UI thread
                 withContext(Dispatchers.Main) {
-                    conversationList.clear()
+                    chatList.clear()
                     // Notify the adapter and update the UI
-                    conversationAdapter.notifyDataSetChanged()
+                    chatAdapter.notifyDataSetChanged()
                 }
             }
-            // make the no conversations layout visible
-            view.findViewById<LinearLayout>(R.id.no_conversations_layout).visibility = View.VISIBLE
-            // make the clear conversations button invisible
-            view.findViewById<Button>(R.id.btn_Clear).visibility = View.GONE
+            // make the no chat layout visible
+            view.findViewById<LinearLayout>(R.id.ll_NoChats).visibility = View.VISIBLE
+            // make the clear chat button invisible
+            view.findViewById<Button>(R.id.btn_ClearChats).visibility = View.GONE
         }
 
         // Inflate the layout for this fragment
@@ -95,15 +95,15 @@ class HomeFragment : Fragment() {
                 chatHistoryDao.getAllChatHistory()
             }
 
-            // Update the conversation list in the UI thread
+            // Update the chat list in the UI thread
             withContext(Dispatchers.Main) {
-                conversationList.clear()
+                chatList.clear()
                 for (chatHistory in chatHistories) {
-                    conversationList.add(Conversation(chatHistory.id, chatHistory.title))
+                    chatList.add(Chat(chatHistory.id, chatHistory.title))
                 }
 
                 // Notify the adapter and update the UI
-                conversationAdapter.notifyDataSetChanged()
+                chatAdapter.notifyDataSetChanged()
             }
         }
     }
@@ -119,10 +119,10 @@ class HomeFragment : Fragment() {
         val view = requireView()
 
         // get the recycler view
-        recyclerView = view.findViewById(R.id.conversation_recycler_view)
-        // create the conversation adapter
-        conversationAdapter = ConversationAdapter(conversationList)
-        recyclerView.adapter = conversationAdapter
+        recyclerView = view.findViewById(R.id.rv_Chats)
+        // create the chat adapter
+        chatAdapter = ChatAdapter(chatList)
+        recyclerView.adapter = chatAdapter
         val llm = LinearLayoutManager(context)
         llm.stackFromEnd = false
         recyclerView.layoutManager = llm

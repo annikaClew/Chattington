@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.example.chattington.R
 import com.example.chattington.fragments.ChatFragment
 import com.example.chattington.fragments.HomeFragment
-import com.example.chattington.fragments.UserProfileFragment
+import com.example.chattington.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         // create the fragments
         val homeFragment = HomeFragment()
         val chatFragment = ChatFragment()
-        val userprofileFragment = UserProfileFragment()
+        val userprofileFragment = ProfileFragment()
 
         // initially set the home fragment
         changeFragment(homeFragment)
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                     // if the current fragment is the chat fragment, change the passed chat id to -1L
                     // this will cause the chat fragment to create a new chat
                     val bundle = Bundle()
-                    bundle.putLong("conversation_id", -1L)
+                    bundle.putLong("chat_id", -1L)
                     chatFragment.arguments = bundle
                     changeFragment(chatFragment)
                     true

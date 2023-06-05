@@ -11,12 +11,12 @@ import com.example.chattington.activities.LoginActivity
 import com.example.chattington.R
 import com.example.chattington.activities.SettingsActivity
 
-class UserProfileFragment : Fragment() {
+class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_user_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         // get the passed username from the bundle
         val username = arguments?.getString("username")
