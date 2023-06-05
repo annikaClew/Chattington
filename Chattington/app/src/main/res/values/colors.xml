@@ -13,5 +13,5 @@
     <color name="medium_purple">#E5CBF2</color>
     <color name="dark_purple">#8556A2</color>
     <!-- font color -->
-    <color name="dark_gray">#FF444444</color>
+    <color name="dark_gray">#FF808080</color>
 </resources>
