@@ -17,7 +17,7 @@ class RegistrationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_registration)
 
 
-        findViewById<Button>(R.id.buttonRegisterAccount).setOnClickListener {
+        findViewById<Button>(R.id.btn_RegisterAccount).setOnClickListener {
             val email = findViewById<EditText>(R.id.et_EmailInput).text.toString()
             val password = findViewById<EditText>(R.id.et_PasswordInput).text.toString()
             val passwordconfirmation = findViewById<EditText>(R.id.et_ConfirmPasswordInput).text.toString()

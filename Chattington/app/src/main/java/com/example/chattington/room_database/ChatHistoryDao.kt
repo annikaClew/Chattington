@@ -12,9 +12,9 @@ interface ChatHistoryDao {
     @Update
     fun updateChatHistory(history: ChatHistory)
 
-    // deleting one chat history
-    @Delete
-    fun deleteChatHistory(history: ChatHistory)
+    // deleting one chat history using the id
+    @Query("DELETE FROM chat_history WHERE id = :id")
+    fun deleteChatHistory(id: Long)
 
     // deleting all chat history
     @Query("DELETE FROM chat_history")

@@ -12,8 +12,10 @@ import androidx.room.TypeConverters
 )
 @TypeConverters(Converters::class)
 abstract class ChatHistoryDatabase: RoomDatabase() {
+    // abstract method to get the chat history dao
     abstract fun chatHistoryDao(): ChatHistoryDao
 
+    // singleton instance of the database
     companion object {
         @Volatile
         private var INSTANCE: ChatHistoryDatabase? = null

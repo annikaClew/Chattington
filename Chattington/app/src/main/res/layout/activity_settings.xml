@@ -142,7 +142,7 @@
         android:id="@+id/btn_Save"
         android:layout_width="207dp"
         android:layout_height="48dp"
-        android:text="Save Profile"
+        android:text="Update Profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

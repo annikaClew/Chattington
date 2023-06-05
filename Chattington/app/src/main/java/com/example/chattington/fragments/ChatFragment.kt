@@ -75,15 +75,15 @@ class ChatFragment : Fragment() {
         db = ChatHistoryDatabase.getInstance(requireContext().applicationContext)
         chatHistoryDao = db.chatHistoryDao()
 
-        headerText = view.findViewById(R.id.header_text)
+        headerText = view.findViewById(R.id.tv_ChatDescription)
         // get the passed chat id from the bundle
-        chatId = arguments?.getLong("conversation_id") ?: -1L
+        chatId = arguments?.getLong("chat_id") ?: -1L
 
         // get all necessary UI elements for the chat
-        recyclerView = view.findViewById(R.id.chat_recycler_view)
-        welcomeTextView = view.findViewById(R.id.welcome_text)
-        messageEditText = view.findViewById(R.id.message_edit_text)
-        sendButton = view.findViewById(R.id.send_btn)
+        recyclerView = view.findViewById(R.id.rv_Messages)
+        welcomeTextView = view.findViewById(R.id.ll_NewChatMessage)
+        messageEditText = view.findViewById(R.id.et_MessageInput)
+        sendButton = view.findViewById(R.id.ib_SendBtn)
         // Setup recycler view
         messageAdapter = MessageAdapter(messageList)
         recyclerView.adapter = messageAdapter
@@ -133,7 +133,7 @@ class ChatFragment : Fragment() {
 
 
         // get all necessary UI elements for speech to text
-        micButton = view.findViewById(R.id.mic_btn)
+        micButton = view.findViewById(R.id.iv_MicBtn)
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
         val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
@@ -273,7 +273,7 @@ class ChatFragment : Fragment() {
         childFragmentManager.addOnBackStackChangedListener(backStackListener)
 
         // get the chatId from the arguments
-        chatId = arguments?.getLong("conversation_id") ?: -1L
+        chatId = arguments?.getLong("chat_id") ?: -1L
 
         // update the information of the chat
         if (chatId != -1L) {

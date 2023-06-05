@@ -35,9 +35,9 @@ class MessageAdapter(private val messageList: List<Message>) :
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val leftChatView: LinearLayout = itemView.findViewById(R.id.left_chat_view)
-        val rightChatView: LinearLayout = itemView.findViewById(R.id.right_chat_view)
-        val leftTextView: TextView = itemView.findViewById(R.id.left_chat_text_view)
-        val rightTextView: TextView = itemView.findViewById(R.id.right_chat_text_view)
+        val leftChatView: LinearLayout = itemView.findViewById(R.id.ll_LeftChatView)
+        val rightChatView: LinearLayout = itemView.findViewById(R.id.ll_RightChatView)
+        val leftTextView: TextView = itemView.findViewById(R.id.tv_LeftChatText)
+        val rightTextView: TextView = itemView.findViewById(R.id.tv_RightChatText)
     }
 }

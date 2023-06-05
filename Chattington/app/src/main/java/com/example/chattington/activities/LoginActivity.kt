@@ -20,8 +20,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val loginButton = findViewById<Button>(R.id.btnLogin)
-        val registerLink = findViewById<TextView>(R.id.textViewNewUser)
+        val loginButton = findViewById<Button>(R.id.btn_Login)
+        val registerLink = findViewById<TextView>(R.id.tv_NewUser)
         val intent = Intent(this, MainActivity::class.java)
         val intent2 = Intent(this, RegistrationActivity::class.java)
 
@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent2)
         }
 
-        findViewById<Button>(R.id.btnLogin).setOnClickListener {
+        findViewById<Button>(R.id.btn_Login).setOnClickListener {
 
             val email = findViewById<EditText>(R.id.et_EmailInput).text.toString()
             val password = findViewById<EditText>(R.id.et_PasswordInput).text.toString()

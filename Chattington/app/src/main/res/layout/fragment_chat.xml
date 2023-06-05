@@ -9,17 +9,19 @@
 
     <!-- chat header with chat title -->
     <LinearLayout
-        android:id="@+id/header_layout"
+        android:id="@+id/ll_ChatHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:gravity="center">
+
         <TextView
-            android:id="@+id/header_text"
+            android:id="@+id/tv_ChatDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
             android:padding="16dp"
             android:text=""
             android:textColor="@android:color/white"
@@ -28,20 +30,21 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@+id/header_layout"
+        android:layout_below="@+id/ll_ChatHeader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/chat_recycler_view"
-        android:layout_above="@id/bottom_layout"
+        android:id="@+id/rv_Messages"
+        android:layout_above="@id/rl_UserInputs"
         />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:backgroundTint="@color/dark_gray"
         android:gravity="center">
 
         <LinearLayout
-            android:id="@+id/welcome_text"
+            android:id="@+id/ll_NewChatMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -50,10 +53,13 @@
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/ic_robot" />
+                android:src="@drawable/ic_robot"
+                app:tint="@color/dark_gray" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
                 android:gravity="center"
                 android:text="Hi I'm Chattington!\nAsk me anything!"
                 android:textSize="28sp" />
@@ -69,30 +75,30 @@
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:padding="8dp"
-        android:id="@+id/bottom_layout">
+        android:id="@+id/rl_UserInputs">
         <!-- the text field, which will show the users msg -->
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/message_edit_text"
+            android:id="@+id/et_MessageInput"
             android:layout_centerInParent="true"
             android:hint="Write here "
             android:padding="16dp"
-            android:layout_toLeftOf="@id/mic_btn"
+            android:layout_toLeftOf="@id/iv_MicBtn"
             android:background="@drawable/rounded_corner"
             />
         <!-- the mic button, which will be used to record the users voice -->
         <ImageView
-            android:id="@+id/mic_btn"
+            android:id="@+id/iv_MicBtn"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:backgroundTint="#F9F8FA"
             android:layout_centerInParent="true"
-            android:layout_toLeftOf="@id/send_btn"
+            android:layout_toLeftOf="@id/ib_SendBtn"
             android:src="@drawable/ic_mic_inactive" />
         <!-- the send button, which will be used to send the users msg -->
         <ImageButton
-            android:id="@+id/send_btn"
+            android:id="@+id/ib_SendBtn"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
