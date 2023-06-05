@@ -37,6 +37,26 @@ class ChatAdapter(private val chatList: List<Chat>) :
         private val deleteButton: ImageView = itemView.findViewById(R.id.iv_DeleteChatIcon)
 
         init {
+            deleteButton.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val chat = chatList[position]
+
+                    // initialize the room database
+                    val db = ChatHistoryDatabase.getInstance(itemView.context.applicationContext)
+                    val chatHistoryDao = db.chatHistoryDao()
+
+                    // delete the chat from the database with the id
+                    //chatHistoryDao.deleteChatHistory(chat.id)
+
+                    // update the dataset by creating a new list without the deleted chat
+                    chatList.toMutableList().removeAt(position)
+
+                    // notify the adapter of the removed item
+                    notifyItemRemoved(position)
+                }
+            }
+
             // when the user clicks on a chat, open the chat fragment and pass the chat id
             itemView.setOnClickListener {
                 val chat = chatList[adapterPosition]
@@ -53,20 +73,6 @@ class ChatAdapter(private val chatList: List<Chat>) :
                 transaction.addToBackStack(null)
                 transaction.commit() // Commit the fragment transaction
             }
-
-            // when the user clicks on the delete button, delete the chat
-//            deleteButton.setOnClickListener {
-//                val chat = chatList[adapterPosition]
-//                chatList.toMutableList().remove(chat)
-//
-//                // initialize the room database
-//                val db = ChatHistoryDatabase.getInstance(itemView.context.applicationContext)
-//                val chatHistoryDao = db.chatHistoryDao()
-//                // delete the chat from the database with the id
-//                chatHistoryDao.deleteChatHistory(chat.id)
-//                // update the recycler view
-//                notifyDataSetChanged()
-//            }
         }
 
         fun bind(chat: Chat) {
