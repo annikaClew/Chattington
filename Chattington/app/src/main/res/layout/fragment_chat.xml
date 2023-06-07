@@ -16,16 +16,15 @@
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:gravity="center">
-
         <TextView
             android:id="@+id/tv_ChatDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:padding="16dp"
-            android:text=""
+            android:text="New Chat"
             android:textColor="@android:color/white"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
     </LinearLayout>
 

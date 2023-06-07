@@ -11,7 +11,7 @@
 
     <!-- chat header with chat title and settings button -->
     <RelativeLayout
-        android:id="@+id/rl_LoginHeader"
+        android:id="@+id/rl_RegisterHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
         android:id="@+id/iv_WelcomeIcon"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_below="@id/rl_LoginHeader"
+        android:layout_below="@id/rl_RegisterHeader"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:contentDescription="Welcome Picture"
@@ -44,7 +44,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_Email"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_EmailLabel"
@@ -52,18 +51,15 @@
         android:layout_marginEnd="50dp"
         android:gravity="center_horizontal"
         android:hint="Enter E-mail">
-
         <!--this is the actual edit text which takes the input-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_EmailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_Password"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_PasswordLabel"
@@ -71,14 +67,12 @@
         android:layout_marginEnd="50dp"
         android:gravity="center_horizontal"
         android:hint="Enter Password">
-
         <!--this is the actual edit text which takes the input-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_PasswordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -146,5 +140,4 @@
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold" />
-
 </RelativeLayout>
