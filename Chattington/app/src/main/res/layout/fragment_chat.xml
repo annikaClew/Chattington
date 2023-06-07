@@ -36,6 +36,8 @@
         android:layout_above="@id/rl_UserInputs"
         />
 
+
+    <!-- layout for the bottom of the chat fragment -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -67,33 +69,31 @@
 
     </RelativeLayout>
 
-
-    <!-- layout for the bottom of the chat fragment -->
     <RelativeLayout
+        android:id="@+id/rl_UserInputs"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:padding="8dp"
-        android:id="@+id/rl_UserInputs">
+        android:background="@color/light_gray"
+        android:padding="8dp">
         <!-- the text field, which will show the users msg -->
         <EditText
+            android:id="@+id/et_MessageInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/et_MessageInput"
             android:layout_centerInParent="true"
-            android:hint="Write here "
-            android:padding="16dp"
             android:layout_toLeftOf="@id/iv_MicBtn"
             android:background="@drawable/rounded_corner"
-            />
+            android:hint="Write here "
+            android:padding="16dp" />
         <!-- the mic button, which will be used to record the users voice -->
         <ImageView
             android:id="@+id/iv_MicBtn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:backgroundTint="#F9F8FA"
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@id/ib_SendBtn"
+            android:backgroundTint="#F9F8FA"
             android:src="@drawable/ic_mic_inactive" />
         <!-- the send button, which will be used to send the users msg -->
         <ImageButton

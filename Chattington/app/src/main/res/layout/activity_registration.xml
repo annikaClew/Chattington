@@ -145,12 +145,12 @@
 
     <TextView
         android:id="@+id/tv_RegistrationTitle"
-        android:layout_width="310dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_RegisterMsgIcon"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/montserrat"
-        android:text="Welcome to Chattington! Please enter your information to create a new account!"
+        android:text="Welcome to Chattington! Please enter your information to create an account!"
         android:textAlignment="center"
         android:textSize="20sp" />
 

@@ -14,4 +14,5 @@
     <color name="dark_purple">#8556A2</color>
     <!-- font color -->
     <color name="dark_gray">#FF808080</color>
+    <color name="light_gray">#FFE8E8E8</color>
 </resources>
