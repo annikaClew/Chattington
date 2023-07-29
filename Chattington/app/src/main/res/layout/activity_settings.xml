@@ -8,7 +8,6 @@
     tools:context=".activities.SettingsActivity">
 
     <TextView
-        android:id="@+id/tv_CurrentPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password"
@@ -22,7 +21,6 @@
         app:layout_constraintVertical_bias="0.688" />
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="119dp"
         android:layout_height="121dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,7 +46,6 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/tv_editProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit Profile Picture"
@@ -139,7 +136,6 @@
         tools:ignore="Deprecated" />
 
     <Button
-        android:id="@+id/btn_Save"
         android:layout_width="207dp"
         android:layout_height="48dp"
         android:text="Update Profile"
@@ -150,7 +146,6 @@
         app:layout_constraintVertical_bias="0.887" />
 
     <Button
-        android:id="@+id/btn_Delete"
         android:layout_width="207dp"
         android:layout_height="48dp"
         android:text="Delete account"
@@ -201,7 +196,6 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_EditEmail" />
 
     <TextView
-        android:id="@+id/tv_CurrentUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
@@ -215,7 +209,6 @@
         app:layout_constraintVertical_bias="0.444" />
 
     <TextView
-        android:id="@+id/tv_CurrentEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
