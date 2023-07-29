@@ -2,23 +2,39 @@ package com.example.chattington.activities
 
 import android.content.ContentValues.TAG
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.chattington.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.ktx.firestore
 
 class LoginActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        // Check if the app is running for the first time or not
+        val isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+            .getBoolean("isFirstRun", true)
+
+        // If the app is running for the first time, start the registration activity
+        if (isFirstRun) {
+            startActivity(Intent(this, RegistrationActivity::class.java))
+            Toast.makeText(this, "First Run", Toast.LENGTH_LONG)
+                .show()
+        }
+
+        // Set isFirstRun to false if the app is not running for the first time
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+            .putBoolean("isFirstRun", false).commit()
 
         val loginButton = findViewById<Button>(R.id.btn_Login)
         val registerLink = findViewById<TextView>(R.id.tv_NewUser)
@@ -47,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Toast.makeText(baseContext, "Invalid email format", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }

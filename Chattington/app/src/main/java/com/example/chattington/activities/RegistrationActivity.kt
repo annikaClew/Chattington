@@ -21,7 +21,7 @@ class RegistrationActivity : AppCompatActivity() {
             val email = findViewById<EditText>(R.id.et_EmailInput).text.toString()
             val password = findViewById<EditText>(R.id.et_PasswordInput).text.toString()
             val passwordconfirmation = findViewById<EditText>(R.id.et_ConfirmPasswordInput).text.toString()
-            val username = findViewById<EditText>(R.id.et_UsernameInput).text.toString()
+            val username = findViewById<EditText>(R.id.et_RegisterUsernameInput).text.toString()
 
             if (password == passwordconfirmation) {
                 val db = FirebaseFirestore.getInstance()

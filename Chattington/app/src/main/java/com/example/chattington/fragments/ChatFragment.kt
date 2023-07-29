@@ -34,6 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import java.lang.Integer.min
 import java.util.*
 
@@ -125,9 +126,8 @@ class ChatFragment : Fragment() {
         // on click listener for chat send button
         sendButton.setOnClickListener {
             val question = messageEditText.text.toString().trim()
-            addToChat(question, Message.SENT_BY_ME)
-            messageEditText.setText("")
             callAPI(question)
+            messageEditText.setText("")
             welcomeTextView.visibility = View.GONE
         }
 
@@ -213,20 +213,44 @@ class ChatFragment : Fragment() {
 
     // ---------- FUNCTION FOR API CALL -----------------------------
     private fun callAPI(question: String) {
-        // OkHttp
-        messageList.add(Message("Typing... ", Message.SENT_BY_BOT))
+        // add the question to the chat
+        addToChat(question, Message.SENT_BY_ME)
+        addToChat("Typing... ", Message.SENT_BY_BOT)
+
+        // create a JSON object to hold the request body
         val jsonBody = JSONObject()
         try {
-            jsonBody.put("model", "text-davinci-003")
-            jsonBody.put("prompt", question)
+            // create a JSON array to hold the processed messages
+            val messagesJsonArray = JSONArray()
+
+            // process the message list to match the format required by the API
+            for (i in messageList.indices) {
+                // create a JSON object for each message
+                val messageJsonObject = JSONObject()
+                // check if msg sent by user or bot and set role accordingly
+                if (messageList[i].sentBy == Message.SENT_BY_ME) {
+                    messageJsonObject.put("role", "user")
+                    messageJsonObject.put("content", messageList[i].message)
+                } else {
+                    messageJsonObject.put("role", "system")
+                    messageJsonObject.put("content", messageList[i].message)
+                }
+                // add the message to the messagesJsonArray
+                messagesJsonArray.put(messageJsonObject)
+            }
+
+            jsonBody.put("model", "gpt-3.5-turbo")
             jsonBody.put("max_tokens", 4000)
             jsonBody.put("temperature", 0)
+            jsonBody.put("messages", messagesJsonArray)
+
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+
         val body = RequestBody.create(JSON, jsonBody.toString())
         val request = Request.Builder()
-            .url("https://api.openai.com/v1/completions")
+            .url("https://api.openai.com/v1/chat/completions")
             .header("Authorization", BuildConfig.OPEN_API_KEY)
             .post(body)
             .build()
@@ -235,14 +259,17 @@ class ChatFragment : Fragment() {
                 addResponse("Failed to load response due to " + e.message)
             }
 
+            // API response
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
-                    var jsonObject: JSONObject? = null
+                    var responseJsonObj: JSONObject? = null
                     try {
-                        jsonObject = JSONObject(response.body?.string())
-                        val jsonArray = jsonObject.getJSONArray("choices")
-                        val result = jsonArray.getJSONObject(0).getString("text")
+                        responseJsonObj = JSONObject(response.body?.string())
+                        val choicesJsonArray = responseJsonObj.getJSONArray("choices")
+                        val choicesJsonObj = choicesJsonArray.getJSONObject(0)
+                        val result = choicesJsonObj.getJSONObject("message").getString("content")
+
                         println(result)
                         addResponse(result.trim())
 
@@ -266,6 +293,7 @@ class ChatFragment : Fragment() {
         })
     }
 
+    // ---------- FUNCTION FOR WHEN THE FRAGMENT IS RESUMED -------------
     override fun onResume() {
         super.onResume()
 

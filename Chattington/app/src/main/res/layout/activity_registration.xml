@@ -1,46 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_purple"
+    android:gravity="center_horizontal"
     tools:context=".activities.RegistrationActivity">
+
+    <!-- chat header with chat title and settings button -->
+    <RelativeLayout
+        android:id="@+id/rl_RegisterHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_ChatDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:fontFamily="@font/montserrat"
+            android:padding="16dp"
+            android:text="Chattington Registration"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <!-- Username -->
     <TextView
         android:id="@+id/tv_Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.200"
-        app:layout_constraintHorizontal_bias="0.300" />
+        android:layout_below="@id/tv_RegistrationTitle"
+        android:layout_alignStart="@id/et_Username"
+        android:layout_marginTop="10dp"
+        android:text="Username" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_Username"
 
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.245"
-        app:layout_constraintHorizontal_bias="0.285"
+        android:layout_below="@id/tv_Username"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:hint="Enter Username">
 
         <!--this is the actual edit text which takes the input-->
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_UsernameInput"
+            android:id="@+id/et_RegisterUsernameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -51,30 +62,19 @@
         android:id="@+id/tv_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.340"
-        app:layout_constraintHorizontal_bias="0.285" />
+        android:layout_below="@id/et_Username"
+        android:layout_alignStart="@id/et_Email"
+        android:layout_marginTop="10dp"
+        android:text="Email" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_Email"
 
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385"
-        app:layout_constraintHorizontal_bias="0.285"
+        android:layout_below="@id/tv_Email"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:hint="Enter Email">
 
         <!--this is the actual edit text which takes the input-->
@@ -90,38 +90,27 @@
         android:id="@+id/tv_Password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.475"
-        app:layout_constraintHorizontal_bias="0.300" />
+        android:layout_below="@id/et_Email"
+        android:layout_alignStart="@id/et_Password"
+        android:layout_marginTop="10dp"
+        android:text="Password" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_Password"
 
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.535"
-        app:layout_constraintHorizontal_bias="0.285"
+        android:layout_below="@id/tv_Password"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:hint="Enter Password">
 
         <!--this is the actual edit text which takes the input-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_PasswordInput"
-            android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -130,65 +119,58 @@
         android:id="@+id/tv_ConfirmPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm Password"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.615"
-        app:layout_constraintHorizontal_bias="0.345" />
+        android:layout_below="@id/et_Password"
+        android:layout_alignStart="@id/et_Password"
+        android:layout_marginTop="10dp"
+        android:text="Confirm Password" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_ConfirmPassword"
 
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685"
-        app:layout_constraintHorizontal_bias="0.285"
+        android:layout_below="@id/tv_ConfirmPassword"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:hint="Re-enter Password">
 
         <!--this is the actual edit text which takes the input-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_ConfirmPasswordInput"
-            android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tv_RegistrationTitle"
-        android:layout_width="256dp"
-        android:layout_height="52dp"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_RegisterMsgIcon"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/montserrat"
-        android:text="Account Registration"
+        android:text="Welcome to Chattington! Please enter your information to create an account!"
         android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btn_RegisterAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_height="52dp"
+        android:layout_below="@id/et_ConfirmPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/montserrat"
-        android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.800" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="Register" />
+
+    <ImageView
+        android:id="@+id/iv_RegisterMsgIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/rl_RegisterHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/ic_chat"
+        app:tint="@color/dark_gray" />
+</RelativeLayout>
